@@ -1,0 +1,16 @@
+---
+title: "Bootstrapping and Power"
+author: "Clare Clingain"
+date: "November 7, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Bootstrapping vs. Simulation
+
+Bootstrapping involves generating a new sample from the given data as opposed to simuation, which generates new data based on the specified DGP with known parameters. Given that one has the data for a post-hoc power analysis, bootstrapping would maintain the grouping structure and allows one to see the fitting of the parameters for each resampling. Bootstrapping is also more robust to uneven group sizes, such that resampling can be done within a specific group, and the *n* can be set for each group. Thus, if we wished to obtain the power of a fixed effect, *X*, we can bootstrap 1,000 samples, run our model, extract the parameter value and the p-values for each iteration, and examine the proportion of times we reject the null hypothesis that *X* is 0. 
+
+

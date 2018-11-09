@@ -48,6 +48,6 @@ dat3 <- cbind.data.frame(rnorm(100,0,1), rnorm(100,10,2), 1:100, rep(1:5, 20), r
 colnames(dat3) <- c("X", "Y", "ID", "schoolid", "classid")
 # Test function 
 dat4 <- bootmlm(id = "ID", group1 = "classid", group2 = "schoolid", data = dat3)
-head(dat3)
+head(dat4)
 ```
 

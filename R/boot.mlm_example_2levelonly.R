@@ -1,6 +1,15 @@
 # 2-level bootstrapping example function
 
-bootmlm <- function(id, group1, data){
+#' Multi-level Bootstrapping
+#'
+#' Bootstrapping for 2-level multi-level data
+#' @usage bootmlm2(id, group1, data)
+#' @param id character of level 1 grouping variable/identifier
+#' @param group1 character of level 2 grouping variable (ex: classrooms)
+#' @param data dataset from which to bootstrap
+#' @examples bootmlm2(id = "ID", group1 = "schoolid", data = dat)
+
+bootmlm2 <- function(id, group1, data){
   # Find the unique groups
   num.groups <- unique(data[,group1])
   # Find the unique IDs
@@ -22,10 +31,3 @@ bootmlm <- function(id, group1, data){
   return(boot.samp)
 }
 
-# Test the function
-set.seed(123)
-dat <- cbind.data.frame(rnorm(100,0,1), rnorm(100,10,2), 1:100, rep(1:5, 20))
-colnames(dat) <- c("X","Y","ID","schoolid")
-dat2 <-bootmlm(id = "ID", group1 = "schoolid", data = dat)
-
-head(dat2)

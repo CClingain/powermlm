@@ -1,21 +1,17 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Build and Reload Package:  'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
+
+#' Multi-level Bootstrapping
+#'
+#' Bootstrapping for 2- or 3-level multi-level data
+#' @usage bootmlm(id, group1, group2 = FALSE, data)
+#' @param id character of level 1 grouping variable/identifier
+#' @param group1 character of level 2 grouping variable (ex: classrooms)
+#' @param group2 character of level 3 grouping variable (ex: schools), default is FALSE in case of only 2 levels of nesting.
+#' @param data dataset from which to bootstrap
+#' @examples bootmlm(id = "ID", group1 = "classid", group2 = "schoolid", data = dat)
 
 # BOOTSTRAP FROM EXISTING DATA WHILE PRESERVING GROUP STRUCTURE
 
-bootmlm <- function(id, group1, group2 = F, predictors, data){
+bootmlm <- function(id, group1, group2 = F, data){
   # id = character of level 1 grouping variable/identifier
   # group1 = character of level 2 grouping variable (ex: classrooms)
   # group2 =  character of level 3 grouping variable (ex: schools), default is FALSE in case of 2 levels
@@ -35,7 +31,7 @@ bootmlm <- function(id, group1, group2 = F, predictors, data){
     # Resample within each group
     for(i in num.groups){
       # Get observations that are in current group
-      in.group <- data[group1==num.groups[i],]
+      in.group <- data[group1==i,]
       # sample from within that group
       group.samp <- in.group[sample(1:nrow(in.group), nrow(in.group), replace = T),]
       # Save into a data frame
@@ -63,7 +59,7 @@ return(boot.samp)
     for(i in num.groups2){
       for(j in num.groups1){
       # Get observations that are in current group
-      in.group <- data[group1==num.groups1[i] & group2 == num.groups2[j],]
+      in.group <- data[group1==j & group2 == i,]
       # sample from within that group
       group.samp <- in.group[sample(1:nrow(in.group), nrow(in.group), replace = T),]
       # Save into a data frame

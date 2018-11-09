@@ -23,7 +23,7 @@ set.seed(123)
 dat <- cbind.data.frame(rnorm(100,0,1), rnorm(100,10,2), 1:100, rep(1:5, 20))
 colnames(dat) <- c("X","Y","ID","schoolid")
 # Test function
-dat2 <-bootmlm(id = "ID", group1 = "schoolid", data = dat)
+dat2 <-bootmlm2(id = "ID", group1 = "schoolid", data = dat)
 head(dat2)
 ```
 
@@ -31,13 +31,25 @@ head(dat2)
 
 The difference between the bootmlm and bootmlm2 function si that the bootmlm function is robust to data with up to 3 levels. That is, we can bootstrap students within classrooms within schools. 
 
-```{r}
-# Generate fake data
+
+## 2 levels of nesting
+
+```{r bootmlm test with 2 levels}
 set.seed(123)
-dat <- cbind.data.frame(rnorm(100,0,1), rnorm(100,10,2), 1:100, rep(1:5, 20), sample(rep(1:10, 10),100,replace = F))
+dat2b <- bootmlm(id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
+head(dat2b)
+```
+
+
+## 3 levels of nesting
+
+```{r bootmlm test with 3 levels}
+# Generate fake data with 3-levels
+set.seed(123)
+dat3 <- cbind.data.frame(rnorm(100,0,1), rnorm(100,10,2), 1:100, rep(1:5, 20), sample(rep(1:10, 10),100,replace = F))
 colnames(dat) <- c("X", "Y", "ID", "schoolid", "classid")
 # Test function 
-dat2 <- bootmlm(id = "ID", group1 = "classid", group2 = "schoolid", data = dat)
+dat4 <- bootmlm(id = "ID", group1 = "classid", group2 = "schoolid", data = dat)
 head(dat2)
 ```
 

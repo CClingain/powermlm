@@ -44,7 +44,7 @@ head(dat2b)
 ```{r bootmlm test with 3 levels}
 # Generate fake data with 3-levels
 set.seed(123)
-dat3 <- cbind.data.frame(rnorm(100,0,1), rnorm(100,10,2), 1:100, rep(1:5, 20), rep(1:10, each = 10))
+dat3 <- cbind.data.frame(rnorm(100,0,1), rnorm(100,10,2), 1:100, rep(1:5, 20), rep(1:5, each = 20))
 colnames(dat3) <- c("X", "Y", "ID", "schoolid", "classid")
 # Test function 
 dat4 <- bootmlm(id = "ID", group1 = "classid", group2 = "schoolid", data = dat3)

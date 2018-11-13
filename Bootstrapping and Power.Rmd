@@ -51,3 +51,7 @@ dat4 <- bootmlm(id = "ID", group1 = "classid", group2 = "schoolid", data = dat3)
 head(dat4)
 ```
 
+## Missing Data
+
+One of the stipulations of these two functions is that there cannot be any missing data in the grouping IDs. However, the functions are able to replicate datasets with missing data.
+The purpose of this package does not include missing data imputation. In a later version, it would be ideal to add this feature. 

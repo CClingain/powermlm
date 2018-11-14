@@ -2,11 +2,9 @@ Package: powermlm
 Type: Package
 Title: Power Analysis for Multi-level Models
 Version: 0.1.0
-Author: Who wrote it
+Author: Clare Clingain
 Maintainer: Clare Clingain <clare.clingain@nyu.edu>
-Description: This package uses bootstrapping, which allows the nesting structure to be preserved,
-to discern the power a study has for detecting fixed effects. Data can be up to 3-levels of nesting,
-and may contain missig data in the covariates. 
+Description: This package uses bootstrapping, which allows the nesting structure to be preserved, to discern the power a study has for detecting fixed effects. Data can be up to 3-levels of nesting, and may contain missig data in the covariates. 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

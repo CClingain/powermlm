@@ -7,6 +7,8 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(lme4)
+library(lmerTest)
 ```
 
 # Bootstrapping vs. Simulation
@@ -55,3 +57,11 @@ head(dat4)
 
 One of the stipulations of these two functions is that there cannot be any missing data in the grouping IDs. However, the functions are able to replicate datasets with missing data.
 The purpose of this package does not include missing data imputation. In a later version, it would be ideal to add this feature. 
+
+## Single Power Estimate
+
+```{r}
+pow.est <- boot.power(model = Y~X + (1|schoolid), n = 100, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
+pow.est
+```
+

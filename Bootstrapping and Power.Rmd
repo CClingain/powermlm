@@ -9,6 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library(lme4)
 library(lmerTest)
+library(powermlm)
 classroom <- read.csv("C:/Users/Clare/Documents/Spring 2018 Multi-level Modeling Nested Data/classroom.csv", stringsAsFactors = T)
 ```
 
@@ -66,12 +67,9 @@ pow.est <- boot.power(model = Y~X + (1|schoolid), n = 100, id = "ID", group1 = "
 pow.est
 ```
 
-## Single Power Estimate: Classroom data
-
-The classroom dataset contains three nested levels: individuals within classrooms within schools. We will predict students' kindergarten math scores based on their socio-economic status, minority status, sex, and household poverty. A random slope at the school level will be included in the model. The power of the two fixed effects will be assessed. 
+### Parallelized version
 
 ```{r}
-power.class <- boot.power(model = mathkind ~ ses + minority + sex + housepov + (1|schoolid), n = 500, id = "childid", group1 = "schoolid", group2 = "classid", data = classroom)
-power.class
+boot.power2(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
 ```
 

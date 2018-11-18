@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(lme4)
 library(lmerTest)
 library(powermlm)
+library(doParallel)
 classroom <- read.csv("C:/Users/Clare/Documents/Spring 2018 Multi-level Modeling Nested Data/classroom.csv", stringsAsFactors = T)
 ```
 
@@ -71,5 +72,19 @@ pow.est
 
 ```{r}
 boot.power2(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
+```
+
+```{r non parallelized}
+start <- Sys.time() 
+boot.power(model = mathkind~sex+minority+ses+(1|schoolid), n = 10, id = "childid", group1 = "classid", group2 = "schoolid", data = classroom)
+end <- Sys.time() 
+end - start
+```
+
+```{r}
+start <- Sys.time()
+class2 <- bootmlm(id="childid",group1="classid", group2 = "schoolid", data = classroom)
+end <- Sys.time()
+end - start
 ```
 

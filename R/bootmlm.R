@@ -46,22 +46,25 @@ return(boot.samp)
     # Find the unique groups for level 3
     num.groups2 <- unique(data[,group2])
     # Find the unique groups for level 2
-    num.groups1 <- unique(data[,group1])
+    #num.groups1 <- unique(data[,group1])
     # Find the unique IDs
     num.ids <- unique(data[,id])
 
     # Initiate bootstrap sample storage
     boot.samp <- NULL
     # Get column call ready since can't pass as before
-    group1 <- data[,group1]
-    group2 <- data[,group2]
+    #group1 <- data[,group1]
+    group2col <- data[,group2]
     # Resample within each group
     for(i in num.groups2){
+      in.group2 <- data[group2col==i,]
+
+      num.groups1 <- unique(in.group2[,group2])
       for(j in num.groups1){
       # Get observations that are in current group
-      in.group <- data[group1==j & group2 == i,]
+      in.group1 <- in.group2[group1==j,]
       # sample from within that group
-      group.samp <- in.group[sample(1:nrow(in.group), nrow(in.group), replace = T),]
+      group.samp <- in.group2[sample(1:nrow(in.group2), nrow(in.group2), replace = T),]
       # Save into a data frame
       boot.samp <- rbind.data.frame(boot.samp,group.samp)
       }

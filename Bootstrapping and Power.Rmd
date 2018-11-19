@@ -88,3 +88,10 @@ end <- Sys.time()
 end - start
 ```
 
+```{r}
+start <- Sys.time() 
+boot.power(model = mathkind~sex+minority+ses+(1|schoolid), n = 1000, id = "childid", group1 = "classid", group2 = "schoolid", data = classroom)
+end <- Sys.time() 
+end - start
+```
+

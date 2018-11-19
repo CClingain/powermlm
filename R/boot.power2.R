@@ -7,7 +7,7 @@
     # Check number of cores
     numcores <- detectCores()
     # Run on the number of cores -1
-    registerDoParallel(cores = numcores - 2)
+    registerDoParallel(cores = numcores/2)
 
     # run the model for each bootstrapped sample
     p.vals <- foreach(nsim = 1:n, .combine = rbind, .packages = c('powermlm','lme4','lmerTest')) %dopar% {

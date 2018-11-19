@@ -23,7 +23,7 @@ boot.power <- function(model, n, id, group1, group2, data){
    coefs <- mod$coefficients[,5]
    p.vals <- rbind(p.vals,coefs)
   }
-  power <- apply(p.vals, 2, FUN = function(x) return(paste(sum(x<.05),"%", sep = "")))
+  power <- apply(p.vals, 2, FUN = function(x) return(paste((sum(x<.05)/n)*100,"%", sep = "")))
   return(power)
 }
 

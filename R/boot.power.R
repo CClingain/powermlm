@@ -28,6 +28,7 @@ boot.power <- function(model, n, id, group1, group2, data){
 }
 
 
-
+# change .05 parameter to get the roc curve
+# rbid <- expensive timewise, find dims in first iteration
 
 

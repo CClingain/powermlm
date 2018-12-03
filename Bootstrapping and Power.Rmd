@@ -64,7 +64,7 @@ The purpose of this package does not include missing data imputation. In a later
 ## Single Power Estimate
 
 ```{r}
-pow.est <- boot.power(model = Y~X + (1|schoolid), n = 100, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
+pow.est <- boot.power(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
 pow.est
 ```
 
@@ -93,5 +93,12 @@ start <- Sys.time()
 boot.power(model = mathkind~sex+minority+ses+(1|schoolid), n = 1000, id = "childid", group1 = "classid", group2 = "schoolid", data = classroom)
 end <- Sys.time() 
 end - start
+```
+
+# Power Curve
+
+```{r}
+pow.curve(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
+
 ```
 

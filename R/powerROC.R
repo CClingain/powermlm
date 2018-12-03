@@ -24,19 +24,19 @@ pow.curve <- function(model, n, id, group1, group2, data){
     p.vals <- rbind(p.vals,coefs)
 
   }
-
-  alphas <- seq(from = .001, to = .05, by = .001)
+  # Create a vector of alphas
+  alphas <- seq(from = .001, to = .10, by = .001)
+  # Initalize storage for power based on each alpha
   power.plots <- matrix(nrow = length(alphas), ncol = nrow(mod$coefficients))
   for (i in 1:length(alphas)) {
     power.plots[i,] <- as.numeric(apply(p.vals, 2, FUN = function(x) return((sum(x<alphas[i])/n))))
 
   }
-return(list(plot(y = power.plots[,1], x = alphas, type = "l", ylab = "Power "),
-         plot(y = power.plots[,2], x = alphas, type = "l", ylab = "Power")))
+# Store and return the power plots for each fixed parameters
+p <- par(mfrow=c(1,1))
+  for (i in 1:ncol(power.plots)){
+    plot(y = power.plots[,i], x = alphas, type = "l", ylab = "Power", main = paste("Power for",rownames(mod$coefficients)[i]))
+  }
+return(par(p))
 
 }
-
-
-
-# change .05 parameter to get the roc curve
-# rbind <- expensive timewise, find dims in first iteration

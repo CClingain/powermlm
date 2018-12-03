@@ -95,10 +95,11 @@ end <- Sys.time()
 end - start
 ```
 
-# Power Curve
+# Power Curve: Alpha
+
+Alpha and Beta (Power) are inversely related. The greater our power, the higher the probability of Type I error. Put otherwise, the lower the alpha, the greater the risk of Type II error. This function displays the power for each fixed parameter of interest over each value of alpha, ranging from .001 to .10. 
 
 ```{r}
 pow.curve(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
-
 ```
 

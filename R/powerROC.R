@@ -21,8 +21,14 @@ pow.curve <- function(model, n, id, group1, group2, data){
     boot.dat <- bootmlm(data = data, id = id, group1 = group1, group2 = group2)
     mod <- summary(lmer(formula = model, data = boot.dat))
     coefs <- mod$coefficients[,5]
-    p.vals <- rbind(p.vals,coefs)
-
+    if(i == 1){
+      # Extract matrix dimensions
+      p.vals <- matrix(ncol = length(coefs), nrow = n)
+      p.vals[i,] <- coefs
+    }
+    else {
+      p.vals[i,] <- coefs
+    }
   }
   # Create a vector of alphas
   alphas <- seq(from = .000, to = .10, by = .001)

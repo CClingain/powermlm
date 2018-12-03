@@ -18,17 +18,22 @@ boot.power <- function(model, n, id, group1, group2, data){
   p.vals <- NULL
   # run the model for each bootstrapped sample
   for(i in 1:n){
-   boot.dat <- bootmlm(data = data, id = id, group1 = group1, group2 = group2)
-   mod <- summary(lmer(formula = model, data = boot.dat))
-   coefs <- mod$coefficients[,5]
-   p.vals <- rbind(p.vals,coefs)
+    boot.dat <- bootmlm(data = data, id = id, group1 = group1, group2 = group2)
+    mod <- summary(lmer(formula = model, data = boot.dat))
+    coefs <- mod$coefficients[,5]
+    if(i == 1){
+      # Extract matrix dimensions
+      p.vals <- matrix(ncol = length(coefs), nrow = n)
+      p.vals[i,] <- coefs
+    }
+    else {
+      p.vals[i,] <- coefs
+    }
   }
   power <- apply(p.vals, 2, FUN = function(x) return(paste((sum(x<.05)/n)*100,"%", sep = "")))
   return(power)
 }
 
 
-# change .05 parameter to get the roc curve
-# rbid <- expensive timewise, find dims in first iteration
 
 

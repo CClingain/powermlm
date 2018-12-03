@@ -25,7 +25,7 @@ pow.curve <- function(model, n, id, group1, group2, data){
 
   }
   # Create a vector of alphas
-  alphas <- seq(from = .001, to = .10, by = .001)
+  alphas <- seq(from = .000, to = .10, by = .001)
   # Initalize storage for power based on each alpha
   power.plots <- matrix(nrow = length(alphas), ncol = nrow(mod$coefficients))
   for (i in 1:length(alphas)) {
@@ -35,7 +35,10 @@ pow.curve <- function(model, n, id, group1, group2, data){
 # Store and return the power plots for each fixed parameters
 p <- par(mfrow=c(1,1))
   for (i in 1:ncol(power.plots)){
-    plot(y = power.plots[,i], x = alphas, type = "l", ylab = "Power", main = paste("Power for",rownames(mod$coefficients)[i]))
+    plot(y = power.plots[,i], x = alphas, type = "l", ylab = "Power", main = paste("Power for",rownames(mod$coefficients)[i]), ylim = c(0,1))
+    abline(v = .05, col = 2, lty = 2)
+    text(x = .05, y = .1, labels = "Alpha = .05", cex = .75, col = 2)
+    text(x = .05, y = max(power.plots[,i]-.2), labels = paste("Power =",power.plots[50,i]), cex = .75, col = 3)
   }
 return(par(p))
 

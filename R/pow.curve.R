@@ -1,8 +1,8 @@
 # Power Curve function
 
-#' Power Curve Power
+#' Power Curve with Varying Alphas
 #'
-#' Obtain a Power Curve based on bootstrapping
+#' Obtain a Power Curve based on bootstrapping with various alpha cut-offs. Displays the relation between power and Type I error rate.
 #' @usage boot.power(model, n, id, group1, group2, data)
 #' @param model vector containing the lmer formula
 #' @param n number of bootstrap samples from which to run the model
@@ -10,6 +10,7 @@
 #' @param group1 character of level 2 grouping variable (ex: classrooms)
 #' @param group2 character of level 3 grouping variable (ex: schools), default is FALSE in case of only 2 levels of nesting.
 #' @param data dataset from which to bootstrap
+#' @return Returns power curves for all fixed parameters specified in the model.
 #' @examples boot.power(model = Y ~ X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
 
 

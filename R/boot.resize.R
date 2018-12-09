@@ -1,4 +1,4 @@
-resize.boot <- function(id, group1, group2 = FALSE, data, level, increase = 2){
+boot.resize <- function(id, group1, group2 = FALSE, data, level, increase = 2){
 
   boot.samp <- NULL
 
@@ -8,10 +8,10 @@ if(group2 == F){
   num.groups <- unique(data[,group1])
   # If the increase will be at the first level
   if(level == id){
-    group1 <- data[,group1]
+    group1col <- data[,group1]
 
     for(i in num.groups){
-      in.group <- data[group1 == i,]
+      in.group <- data[group1col == i,]
       group.samp <- in.group[sample(1:nrow(in.group), nrow(in.group)*increase, replace = T),]
       boot.samp <- rbind.data.frame(boot.samp, group.samp)
     }
@@ -69,11 +69,13 @@ return(boot.samp)
       # Save a new data set for each specific level
       in.group2 <- data[group2col==i,]
       # And find the unique level 2 IDs within each level 3
-      #group1 <- in.group2[,group1]
-      num.groups1 <- unique(in.group2[,group1])
+     # num.groups1 <- unique(in.group2[,group1])
+      colname <- names(in.group2)
+      level2 <- which(colname == group1)
+      num.groups1 <- unique(in.group2[,level2])
       # Sample n new level 2 IDs
       new <- sample(num.groups1, length(num.groups1)*increase, replace = T)
-      group1 <- in.group2[,group1]
+      group1 <- in.group2[,level2]
       all <- c(num.groups1, new)
       newid <- 1
 

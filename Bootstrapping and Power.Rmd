@@ -12,6 +12,7 @@ library(lmerTest)
 library(powermlm)
 library(doParallel)
 library(MASS)
+library(powermlm)
 classroom <- read.csv("C:/Users/Clare/Documents/Spring 2018 Multi-level Modeling Nested Data/classroom.csv", stringsAsFactors = T)
 ```
 
@@ -116,5 +117,34 @@ pow.curve(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", 
 ```{r curve with classrooms}
 set.seed(10314)
 pow.curve(model = mathkind~sex+minority+ses+(1|schoolid), n = 1000, id = "childid", group1 = "classid", group2 = "schoolid", data = classroom)
+```
+
+# Increasing Sample Size
+
+## Testing with two levels, increasing level 1
+
+```{r boot resize test 1}
+set.seed(10314)
+test <- boot.resize(id = "ID", group1 = "schoolid", group2 = F, data = dat, level = "ID", increase = 2)
+```
+
+## Testing with two levels, increasing level 2
+
+```{r boot resize test 2}
+set.seed(10314)
+test <- boot.resize(id = "ID", group1 = "schoolid", group2 = F, data = dat, level = "classid", increase = 2)
+```
+
+## Testing with three levels, increasing level 1
+
+```{r boot resize test 3}
+set.seed(10314)
+ test <- boot.resize(id = "ID", group1 = "classid", group2 = "schoolid", data = dat3, level = "ID", increase = 2)
+```
+
+## Testing with three levels, increasing level 2
+
+```{r}
+test <- boot.resize(id = "ID", group1 = "classid", group2 = "schoolid", data = dat3, level = "classid", increase = 2)
 ```
 

@@ -132,7 +132,7 @@ test <- boot.resize(id = "ID", group1 = "schoolid", group2 = F, data = dat, leve
 
 ```{r boot resize test 2}
 set.seed(10314)
-test <- boot.resize(id = "ID", group1 = "schoolid", group2 = F, data = dat, level = "classid", increase = 2)
+test <- boot.resize(id = "ID", group1 = "schoolid", group2 = F, data = dat, level = "schoolid", increase = 2)
 ```
 
 ## Testing with three levels, increasing level 1

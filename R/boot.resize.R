@@ -19,7 +19,7 @@ if(group2 == F){
   }
   # If the increase will be at the second level
   else if(level == group1){
-    new <- sample(num.groups, length(num.groups)*increase, replace = T)
+    new <- sample(c(num.groups, num.groups), length(num.groups)*(increase-1), replace = T)
     group1col <- data[,group1]
     all <- c(num.groups, new)
     newid <- 1
@@ -64,6 +64,7 @@ return(boot.samp)
     # Find the unique groups for level 3
     num.groups2 <- unique(data[,group2])
     group2col <- data[,group2]
+
     # Resample within each group
     for(i in num.groups2){
       # Save a new data set for each specific level
@@ -74,19 +75,21 @@ return(boot.samp)
       level2 <- which(colname == group1)
       num.groups1 <- unique(in.group2[,level2])
       # Sample n new level 2 IDs
-      new <- sample(num.groups1, length(num.groups1)*increase, replace = T)
-      group1 <- in.group2[,level2]
+      new <- sample(x=c(num.groups1,num.groups1), size=(length(num.groups1)*(increase-1)), replace = T)
+      group1col <- in.group2[,level2]
       all <- c(num.groups1, new)
       newid <- 1
+      boot.samp1 <- NULL
 
       for(j in all){
-        in.group <- in.group2[group1 == j,]
+        in.group <- in.group2[group1col == j,]
         group.samp <- in.group[sample(1:nrow(in.group), nrow(in.group), replace = T),]
 
         group.samp$level2id <- newid
-        boot.samp <- rbind.data.frame(boot.samp, group.samp)
+        boot.samp1 <- rbind.data.frame(boot.samp1, group.samp)
         newid <- newid+1
       }
+      boot.samp <- rbind(boot.samp, boot.samp1)
     }
 
    }

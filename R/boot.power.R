@@ -31,6 +31,7 @@ boot.power <- function(model, n, id, group1, group2, data){
     }
   }
   power <- apply(p.vals, 2, FUN = function(x) return(paste((sum(x<.05)/n)*100,"%", sep = "")))
+  names(power) <- names(coefs)
   return(power)
 }
 

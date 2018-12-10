@@ -57,12 +57,14 @@ dat4 <- bootmlm(id = "ID", group1 = "classid", group2 = "schoolid", data = dat3)
 head(dat4)
 ```
 
-## Missing Data
+## Note on Missing Data
 
 One of the stipulations of these two functions is that there cannot be any missing data in the grouping IDs. However, the functions are able to replicate datasets with missing data.
 The purpose of this package does not include missing data imputation. In a later version, it would be ideal to add this feature. 
 
 ## Single Power Estimate
+
+### Test with Simulated data
 
 ```{r}
 set.seed(151)
@@ -70,35 +72,23 @@ pow.est <- boot.power(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = 
 pow.est
 ```
 
-### Parallelized version
-
-```{r}
-set.seed(151)
-boot.power2(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
-```
+### Test with classrooms data
 
 ```{r non parallelized}
-set.seed(151)
-start <- Sys.time() 
-boot.power(model = mathkind~sex+minority+ses+(1|schoolid), n = 10, id = "childid", group1 = "classid", group2 = "schoolid", data = classroom)
-end <- Sys.time() 
-end - start
-```
-
-```{r single iteration}
-set.seed(151)
-start <- Sys.time()
-class2 <- bootmlm(id="childid",group1="classid", group2 = "schoolid", data = classroom)
-end <- Sys.time()
-end - start
-```
-
-```{r nonparallelized classrooms}
 set.seed(151)
 start <- Sys.time() 
 boot.power(model = mathkind~sex+minority+ses+(1|schoolid), n = 1000, id = "childid", group1 = "classid", group2 = "schoolid", data = classroom)
 end <- Sys.time() 
 end - start
+```
+
+## Parallelized version
+
+In an attempt to speed up the run-time for the boot.power function, I created a parallelized version. However, it does not run well on PCs, so it will not be pursued for the remainder of this project.
+
+```{r parallelized, eval = F}
+set.seed(151)
+boot.power2(model = Y~X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
 ```
 
 # Power Curve: Alpha
@@ -144,7 +134,15 @@ set.seed(10314)
 
 ## Testing with three levels, increasing level 2
 
-```{r}
+```{r boot resize test 3}
 test <- boot.resize(id = "ID", group1 = "classid", group2 = "schoolid", data = dat3, level = "classid", increase = 2)
+```
+
+# Power Estimate of Increased Sample
+
+One can also obtain the point estimate of power for fixed effects using the increased sample. 
+
+```{r}
+power.resize(model = Y ~ X + (1|schoolid), n = 1000, id = "ID", group1 = "schoolid", group2 = FALSE, data = dat, level = "ID", increase = 2)
 ```
 

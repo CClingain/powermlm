@@ -1,3 +1,18 @@
+# Bootstrapping with resized sample function
+
+#' Bootstrapping with Resized Sample
+#'
+#' Increase your sample size at level 1 or level 2 by bootstrapping.
+#' @usage boot.resize(id, group1, group2, data, level, increase = 50)
+#' @param id character of level 1 grouping variable/identifier
+#' @param group1 character of level 2 grouping variable (ex: classrooms)
+#' @param group2 character of level 3 grouping variable (ex: schools), default is FALSE in case of only 2 levels of nesting.
+#' @param data dataset from which to bootstrap
+#' @param level character of level variable at which you want to increase sample size
+#' @param increase = numerical value of multiplicative increase in sample size, default is 2
+#' @examples boot.resize(id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
+
+
 boot.resize <- function(id, group1, group2 = FALSE, data, level, increase = 2){
 
   boot.samp <- NULL
@@ -74,21 +89,29 @@ return(boot.samp)
       colname <- names(in.group2)
       level2 <- which(colname == group1)
       num.groups1 <- unique(in.group2[,level2])
-      # Sample n new level 2 IDs
+      # Sample n new level 2 IDs: Note we cbind the IDs since sample function returns 1:x if only one number in vector, which will cause function to crash
       new <- sample(x=c(num.groups1,num.groups1), size=(length(num.groups1)*(increase-1)), replace = T)
+      # Save as subset
       group1col <- in.group2[,level2]
+      # Combine original IDs and newly sampled ones
       all <- c(num.groups1, new)
+      # Set ID counter for the new IDs
       newid <- 1
+      # Initialize storage for nested loop (bootstrap each new level2)
       boot.samp1 <- NULL
 
       for(j in all){
+        # Subset to current level 2 ID (ex. classroom 1)
         in.group <- in.group2[group1col == j,]
+        # Sample students
         group.samp <- in.group[sample(1:nrow(in.group), nrow(in.group), replace = T),]
-
+        # Generate new level 2 ID
         group.samp$level2id <- newid
         boot.samp1 <- rbind.data.frame(boot.samp1, group.samp)
+        # Increase counter. Note: each school will now have level2 IDs 1:x
         newid <- newid+1
       }
+      # Combine from each level 2 into total for level 3
       boot.samp <- rbind(boot.samp, boot.samp1)
     }
 

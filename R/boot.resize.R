@@ -2,7 +2,7 @@
 
 #' Bootstrapping with Resized Sample
 #'
-#' Increase your sample size at level 1 or level 2 by bootstrapping.
+#' Increase your sample size at level 1 or level 2 by bootstrapping. This function is intended for use with pilot study data to understand how great of an increase in sample size, whether through level 1 or level 2, would result in acceptable power for a full-scale study.
 #' @usage boot.resize(id, group1, group2, data, level, increase = 50)
 #' @param id character of level 1 grouping variable/identifier
 #' @param group1 character of level 2 grouping variable (ex: classrooms)

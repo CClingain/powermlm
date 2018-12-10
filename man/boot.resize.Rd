@@ -20,7 +20,7 @@ boot.resize(id, group1, group2, data, level, increase = 50)
 \item{increase}{= numerical value of multiplicative increase in sample size, default is 2}
 }
 \description{
-Increase your sample size at level 1 or level 2 by bootstrapping.
+Increase your sample size at level 1 or level 2 by bootstrapping. This function is intended for use with pilot study data to understand how great of an increase in sample size, whether through level 1 or level 2, would result in acceptable power for a full-scale study.
 }
 \examples{
 boot.resize(id = "ID", group1 = "schoolid", group2 = FALSE, data = dat)
